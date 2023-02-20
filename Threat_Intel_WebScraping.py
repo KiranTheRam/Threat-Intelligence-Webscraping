@@ -19,9 +19,7 @@ def thn_scrape():
     return {"article": article, "date": date, "blurb": blurb, "link": link}
 
 
-def dr_rm_scrape():
-    URL = "https://www.darkreading.com/security-monitoring"
-
+def dr_scrape(URL):
     page = requests.get(URL, headers=headers)
     soup = BeautifulSoup(page.content, "html.parser")
 
@@ -49,16 +47,25 @@ def kos_scrape():
 
 
 while True:
-    site_code = input("\nEnter one of the following:\nThe Hacker Network -> thn \nDark Reading - Security Monitoring -> "
-                      "dr\nKrebbs On Security -> kos\n->")
+    site_code = input("\nEnter one of the following:\nThe Hacker Network -> thn \nDark Reading - Security Monitoring -> dr_sm\nDark Reading - Cloud -> dr_cloud\nDark Reading - Attack Breaches -> dr_ab\nDark Reading - Application Security -> dr_as\nKrebbs On Security -> kos\n->")
 
     site_code = site_code.lower()
     if site_code == 'exit':
         exit(-34)
     elif site_code == "thn":
         article_info = thn_scrape()
-    elif site_code == "dr":
-        article_info = dr_rm_scrape()
+    elif site_code == "dr_sm":
+        URL = "https://www.darkreading.com/security-monitoring"
+        article_info = dr_scrape(URL)
+    elif site_code == "dr_cloud":
+        URL = "https://www.darkreading.com/cloud"
+        article_info = dr_scrape(URL)
+    elif site_code == "dr_ab":
+        URL = "https://www.darkreading.com/attacks-breaches"
+        article_info = dr_scrape(URL)
+    elif site_code == "dr_as":
+        URL = "https://www.darkreading.com/application-security"
+        article_info = dr_scrape(URL)
     elif site_code == "kos":
         article_info = kos_scrape()
     else:
